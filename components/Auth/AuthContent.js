@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import FlatButton from "../ui/FlatButton";
 import AuthForm from "./AuthForm";
 import { Colors } from "../../constants/Colors";
 
 function AuthContent({ isLogin, onAuthenticate }) {
+  const navigation = useNavigation();
+
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
     password: false,
@@ -14,7 +17,11 @@ function AuthContent({ isLogin, onAuthenticate }) {
   });
 
   function switchAuthModeHandler() {
-    // Todo
+    if (isLogin) {
+      navigation.navigate("Signup");
+    } else {
+      navigation.navigate("Login");
+    }
   }
 
   function submitHandler(credentials) {
@@ -53,8 +60,13 @@ function AuthContent({ isLogin, onAuthenticate }) {
         credentialsInvalid={credentialsInvalid}
       />
       <View style={styles.buttons}>
+        {isLogin ? (
+          <Text style={styles.text}>Don't have and account?</Text>
+        ) : (
+          <Text style={styles.text}>Already have an account?</Text>
+        )}
         <FlatButton onPress={switchAuthModeHandler}>
-          {isLogin ? "Create a new user" : "Log in instead"}
+          {isLogin ? "Sign Up" : "Login"}
         </FlatButton>
       </View>
     </View>
@@ -76,7 +88,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
   },
+  text: {
+    textAlign: "center",
+    color: Colors.lightBeige,
+  },
   buttons: {
-    marginTop: 8,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 10,
   },
 });

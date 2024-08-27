@@ -20,14 +20,14 @@ export default FlatButton;
 const styles = StyleSheet.create({
   button: {
     paddingVertical: 6,
-    paddingHorizontal: 12,
+    paddingHorizontal: 8,
   },
   pressed: {
     opacity: 0.7,
   },
   buttonText: {
     textAlign: "center",
-    color: Colors.lightBeige,
-    fontWeight: "bold",
+    fontSize: 14,
+    color: Colors.orange,
   },
 });
