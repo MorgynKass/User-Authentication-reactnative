@@ -1,11 +1,14 @@
 import axios from "axios";
 
-const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
-async function createUser(email, password) {
-  axios.post(apiUrl, {
-    email: email,
-    password: password,
-    returnSecureToken: true,
-  });
+export async function createUser(email, password) {
+  const response = await axios.post(
+    "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" + API_KEY,
+    {
+      email: email,
+      password: password,
+      returnSecureToken: true,
+    }
+  );
 }
