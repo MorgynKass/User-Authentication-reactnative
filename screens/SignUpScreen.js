@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Alert } from "react-native";
 
 import AuthContent from "../components/Auth/AuthContent";
 import { createUser } from "../utils/auth";
@@ -9,7 +10,15 @@ function SignUpScreen() {
 
   async function signUpHandler({ email, password }) {
     setIsAuthing(true);
-    await createUser(email, password);
+    try {
+      await createUser(email, password);
+    } catch (error) {
+      Alert.alert(
+        "Unable to create account",
+        "One or more of your inputs were incorrect"
+      );
+    }
+
     setIsAuthing(false);
   }
 
