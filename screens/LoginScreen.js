@@ -12,19 +12,13 @@ function LoginScreen() {
   const authContext = useContext(AuthContext);
 
   async function loginHandler({ email, password }) {
-    try {
-      setIsAuthing(true);
+    setIsAuthing(true);
 
-      try {
-        const token = await loginUser(email, password);
-        authContext.authenticate(token);
-      } catch (error) {
-        Alert.alert("Unable to login", "Incorrect email or password.");
-      }
+    try {
+      const token = await loginUser(email, password);
+      authContext.authenticate(token);
     } catch (error) {
-      console.log(error);
-      Alert.alert("Unable to login", "Try again later.");
-    } finally {
+      Alert.alert("Unable to login", "Incorrect email or password.");
       setIsAuthing(false);
     }
   }
