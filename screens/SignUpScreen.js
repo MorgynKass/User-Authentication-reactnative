@@ -1,17 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Alert } from "react-native";
 
 import AuthContent from "../components/Auth/AuthContent";
 import { createUser } from "../utils/auth";
 import LoadingOverlay from "../components/ui/LoadingOverlay";
+import { AuthContext } from "../store/auth-context";
 
 function SignUpScreen() {
   const [isAuthing, setIsAuthing] = useState(false);
 
+  const authContext = useContext(AuthContext);
+
   async function signUpHandler({ email, password }) {
     setIsAuthing(true);
     try {
-      await createUser(email, password);
+      const token = await createUser(email, password);
+      authContext.authenticate(token);
     } catch (error) {
       Alert.alert(
         "Unable to create account",
